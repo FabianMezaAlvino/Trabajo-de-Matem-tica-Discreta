@@ -15,7 +15,7 @@ def Preludio():
     print(" " * 15, "│       Software para hallar ruta óptima mediante el uso del algoritmo de PRIM        │")
     print(" " * 15, "├─────────────────────────────────────────────────────────────────────────────────────┤")
     print(" " * 15, "│   Realizado por: Aymee Guiliana Alfaro Villalobos                                   │")
-    print(" " * 15, "│                  Fabian Alessandro Moises Meza Alvino                               │")
+    print(" " * 15, "│                  Fabián Alessandro Moises Meza Alvino                               │")
     print(" " * 15, "│                  Edwin Mosefu Ramirez                                               │")
     print(" " * 15, "│                  Yomira Fiorela Torres Cruz                                         │")
     print(" " * 15, "├─────────────────────────────────────────────────────────────────────────────────────┤")
