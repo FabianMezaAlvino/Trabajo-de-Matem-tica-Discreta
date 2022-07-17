@@ -10,7 +10,7 @@ def Preludio():
     print(" " * 15, "┌─────────────────────────────────────────────────────────────────────────────────────┐")
     print(" " * 15, "│                         Universidad Nacional de Ingeniería                          │")
     print(" " * 15, "├─────────────────────────────────────────────────────────────────────────────────────┤")
-    print(" " * 15, "│                   Facultad de ingeniería industrial y de sistemas                   │")
+    print(" " * 15, "│                   Facultad de Ingeniería Industrial y de Sistemas                   │")
     print(" " * 15, "├─────────────────────────────────────────────────────────────────────────────────────┤")
     print(" " * 15, "│       Software para hallar ruta optima mediante el uso del algoritmo de PRIM        │")
     print(" " * 15, "├─────────────────────────────────────────────────────────────────────────────────────┤")
