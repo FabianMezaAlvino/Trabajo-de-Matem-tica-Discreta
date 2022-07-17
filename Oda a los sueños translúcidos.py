@@ -1,0 +1,245 @@
+import time
+
+for m in range(0, 3):
+    print('\tIniciando programa, espere...', 3 - m)
+    time.sleep(1)
+print("\t¡Bienvenidos a nuestro programa!")
+
+def Preludio():
+    print("\n")
+    print(" " * 15, "┌─────────────────────────────────────────────────────────────────────────────────────┐")
+    print(" " * 15, "│                         Universidad Nacional de Ingeniería                          │")
+    print(" " * 15, "├─────────────────────────────────────────────────────────────────────────────────────┤")
+    print(" " * 15, "│                   Facultad de ingeniería industrial y de sistemas                   │")
+    print(" " * 15, "├─────────────────────────────────────────────────────────────────────────────────────┤")
+    print(" " * 15, "│       Software para hallar ruta optima mediante el uso del algoritmo de PRIM        │")
+    print(" " * 15, "├─────────────────────────────────────────────────────────────────────────────────────┤")
+    print(" " * 15, "│   Realizado por: Aymee Guiliana Alfaro Villalobos                                   │")
+    print(" " * 15, "│                  Fabian Alessandro Moises Meza Alvino                               │")
+    print(" " * 15, "│                  Edwin Mosefu Ramirez                                               │")
+    print(" " * 15, "│                  Yomira Fiorela Torres Cruz                                         │")
+    print(" " * 15, "├─────────────────────────────────────────────────────────────────────────────────────┤")
+    print(" " * 15, "│                                                                                     │")
+    print(" " * 15, "│                                                                                     │")
+    print(" " * 15, "│                            Presione ENTER para comenzar                             │")
+    print(" " * 15, "│                                                                                     │")
+    print(" " * 15, "│                                                                                     │")
+    print(" " * 15, "├─────────────────────────────────────────────────────────────────────────────────────┤")
+    print(" " * 15, "│                                      © 2022                                         │")
+    print(" " * 15, "└─────────────────────────────────────────────────────────────────────────────────────┘")
+    input()
+    Menu()
+
+
+
+def arbol_de_expansion_minima(grafo, cantidad_vertices):
+    lista_vertices = [] # Lista que evalua la inclusión de todos los vértices en el árbol de expansión.
+    lista_aristas = [] # Lista que almacena todas las aritas que forman parte del árbol de enxpansión mínima.
+    grafo = ordenar_arbol(grafo) # Ordena el árbol en función del peso (de menor a mayor).
+    lista_vertices = añadir_lista_vertices(grafo[0], lista_vertices) # Añade los dos vértices a la lista de vertices.
+    lista_aristas.append(grafo[0]) # Añade la primera arista a la lista de vértices.
+    #Procede a hallar las aristas que conformarán el árbol de expansión mínima
+    return(buscando_arbol(grafo, cantidad_vertices, lista_vertices, lista_aristas))
+
+
+def buscando_arbol(grafo, cantidad_vertices, lista_vertices, lista_aristas):
+    
+    # Se comprueba si el árbol de expansión ya contiene a todos los vértices.
+    if(cantidad_vertices == len(lista_vertices)):
+        return(lista_aristas)
+    else:
+        arista_peso_minimo = None
+        # Escoge un vértice de la lista de vérices.
+        for i in range(len(lista_vertices)):
+            # Escoge una arista del grafo.
+            for a in range(len(grafo)):
+                # Comprueba si uno de los dos vértices de la arista seleecionada es igual al vértice seleccionado.
+                if(lista_vertices[i] == grafo[a][0] or lista_vertices[i] == grafo[a][1]):
+                    # Comprueba si la arista seleccionada no está en la lista de aristas:
+                    if(grafo[a] not in lista_aristas):
+                        # Si no hay ninguna arista_anterior, entonces la arista seleccionada es la nueva arista de peso mínimo.
+                        if(arista_peso_minimo == None):
+                            if((grafo[a][0] in lista_vertices and grafo[a][1] not in lista_vertices) or (grafo[a][0]
+                            not in lista_vertices and grafo[a][1] in lista_vertices)):
+                                arista_peso_minimo = grafo[a]
+
+                        # Si ya había una arista anterior, entonces esta se compara en peso con la arista seleccionada.
+                        else:
+                            if((grafo[a][0] in lista_vertices and grafo[a][1] not in lista_vertices) or (grafo[a][0]
+                            not in lista_vertices and grafo[a][1] in lista_vertices)):
+                                if(arista_peso_minimo[2] > grafo[a][2]):
+                                    arista_peso_minimo = grafo[a]
+
+        # Añade el nuevo vértice a la lista de vertices.
+        lista_vertices = añadir_lista_vertices(arista_peso_minimo, lista_vertices)
+        # Añade la nueva arista a la lista de aristas.
+        lista_aristas.append(arista_peso_minimo)
+        # Se repite el proceso, pero esta vez con un vértice más en la lista de vértices.
+        return(buscando_arbol(grafo, cantidad_vertices, lista_vertices, lista_aristas))
+
+
+# Ordena el árbol en función del peso (de menor a mayor).
+def ordenar_arbol(grafo):
+    grafoc = 0
+    for i in range(len(grafo)-1, 0, -1):
+        for a in range(i):
+            if(grafo[a][2] > grafo[a+1][2]):
+                grafoc = grafo[a]
+                grafo[a] = grafo[a+1]
+                grafo[a+1] = grafoc
+
+    return(grafo)
+
+def añadir_lista_vertices(añadir_vertice, lista_vertices):
+    for i in range(2):
+        if(añadir_vertice[i] not in lista_vertices):
+            lista_vertices.append(añadir_vertice[i])
+    return(lista_vertices)
+
+#Muestra el árbol de expansión mínimo
+def mostrar_grafo(grafo):
+    global g1, contador_vertices
+    peso_total = 0
+    for e in grafo:
+        peso_total += e[2]
+    print()
+    print()
+    print()
+    print("-------------------------")
+    print("Árbol de expansión mínima")
+    print("-------------------------")
+    print("Peso:\t" + str(peso_total))
+    print("Aristas:")
+    print(grafo)
+    print()
+    print()
+    print()
+    print(" " * 15, "┌─────────────────────────────────────────────────────────────────────────────────────┐")
+    print(" " * 15, "│                                                                                     │")
+    print(" " * 15, "│                 ┌────────────────────────────────────────────────┐                  │")
+    print(" " * 15, "│                 │                                                │                  │")
+    print(" " * 15, "│                 │  Presione ENTER para volver al menú principal  │                  │")
+    print(" " * 15, "│                 │                                                │                  │")
+    print(" " * 15, "│                 └────────────────────────────────────────────────┘                  │")
+    print(" " * 15, "│                                                                                     │")
+    print(" " * 15, "└─────────────────────────────────────────────────────────────────────────────────────┘")
+    input()
+    g1 = []
+    contador_vertices = []
+    Menu()
+
+#Crea las aristas del grafo. Los vértices los almacena automáticamente.
+def crear_artistas():
+    global g1, contador_vertices
+    print()
+    vertice_1 = input("Introduzca el nombre del primer vértice: ")
+    vertice_2 = input("Introduzca el nombre del segundo vértice: ")
+    distancia = int(input("Introduzca la distancia entre los dos vértices: "))
+    # Verifica si los vértices ya estan en la lista de vértices.
+    if vertice_1 not in contador_vertices:
+        contador_vertices.append(vertice_1)
+    if vertice_2 not in contador_vertices:
+        contador_vertices.append(vertice_2)
+    # Con los datos crea la arista y la añade.
+    arista=(vertice_1,vertice_2,distancia)
+    g1.append(arista)
+    Menu()
+
+def algoritmo_Prim():
+    cantidad_vertices = len(contador_vertices)
+    aem1 = arbol_de_expansion_minima(g1, cantidad_vertices)
+    mostrar_grafo(aem1)
+
+
+'''
+Ejemplo 01 de la clase de la semana 09 (Matemática Discreta).
+g1 = [
+    ("A","B",7),
+    ("A","D",4),
+    ("D","G",4),
+    ("A","C",6),
+    ("G","E",8),
+    ("F","G",6),
+    ("C","F",5),
+    ("B","E",9),
+    Peso esperado: 34
+]
+
+
+Ejemplo 02 de la clase de la semana 09 (Matemática Discreta).
+g2 = [
+    ("A","B",9),
+    ("B","C",12),
+    ("D","C",11),
+    ("A","E",10),
+    ("E","F",12),
+    ("G","F",8),
+    ("C","F",14),
+    ("G","C",9),
+    ("G","D",13),
+    ("G","H",9),
+    ("D","H",14),
+    ("G","I",6),
+    ("G","J",10),
+    ("F","I",7),
+    ("J","I",11),
+    Peso esperado: 83
+]
+
+'''
+
+def Menu():
+    global g1
+    print("\n")
+    print("\n")
+    print(" " * 15, "╔═════════════════════════════════════════════════════════════════════════════════════╗")
+    print(" " * 15, "║                       Bienvenido al menú de nuestro programa                        ║")
+    print(" " * 15, "╠═════════════════════════════════════════════════════════════════════════════════════╣")
+    print(" " * 15, "║                          Seleccione alguna de las opciones                          ║")
+    print(" " * 15, "╠═════════════╦═══════════════════════════════════════════════════════════════════════╣")
+    print(" " * 15, "║     <1>     ║ Añadir aristas                                                        ║")
+    print(" " * 15, "╠═════════════╬═══════════════════════════════════════════════════════════════════════╣")
+    print(" " * 15, "║     <2>     ║ Hallar ruta óptima                                                    ║")
+    print(" " * 15, "╠═════════════╬═══════════════════════════════════════════════════════════════════════╣")
+    print(" " * 15, "║     <3>     ║ Salir del progama                                                     ║")
+    print(" " * 15, "╠═════════════╩═══════════════════════════════════════════════════════════════════════╣")
+    print(" " * 15, "║                                                                                     ║")
+    print(" " * 15, "║                                                                                     ║")
+    print(" " * 15, "║                                                                                     ║")
+    print(" " * 15, "║                                                                                     ║")
+    print(" " * 15, "║                                                                                     ║")
+    print(" " * 15, "║                                                                                     ║")
+    print(" " * 15, "╚═════════════════════════════════════════════════════════════════════════════════════╝")
+    print("\n")
+    opc = input("Por favor, elija una opción: ")
+    if opc == "1":
+        crear_artistas()
+
+    elif opc == "2":
+
+        if len(g1) > 0: #Debe haber mínimo una arista.
+            algoritmo_Prim()
+
+        else:
+            print()
+            print("*" * 100)
+            print("El grafo debe tener mínimo una arista. Vuelva a intentarlo")
+            print("*" * 100)
+            print()
+            Menu()
+
+    elif opc == "3":
+        print()
+        exit()
+        
+    else:
+        print()
+        print("*" * 100)
+        print("Opción no encontrada. Vuelva a intentarlo.")
+        print("*" * 100)
+        print()
+        Menu()
+
+g1 = []
+contador_vertices = []
+Preludio()
