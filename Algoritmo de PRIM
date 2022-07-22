@@ -102,6 +102,7 @@ def mostrar_grafo(grafo):
     peso_total = 0
     for e in grafo:
         peso_total += e[2]
+    peso_total = round(peso_total,1)
     print()
     print()
     print()
@@ -134,7 +135,7 @@ def crear_artistas():
     print()
     vertice_1 = input("Introduzca el nombre del primer vértice: ")
     vertice_2 = input("Introduzca el nombre del segundo vértice: ")
-    distancia = int(input("Introduzca la distancia entre los dos vértices: "))
+    distancia = float(input("Introduzca la distancia entre los dos vértices: "))
     # Verifica si los vértices ya estan en la lista de vértices.
     if vertice_1 not in contador_vertices:
         contador_vertices.append(vertice_1)
